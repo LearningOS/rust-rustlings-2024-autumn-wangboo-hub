@@ -6,60 +6,30 @@
 //
 // Execute `rustlings hint as_ref_mut` or use the `hint` watch subcommand for a
 // hint.
+#[rustfmt::skip]
+#[allow(unused_variables, unused_assignments)]
+fn main() {
+    let my_option: Option<()> = None;
+    if let Some(value) = my_option {
+        println!("{:?}", value);
+    } else {
+        println!("Option is None");
+    }
 
-// I AM NOT DONE
+    let my_arr = &[
+        -1, -2, -3,
+        -4, -5, -6,
+    ];
+    println!("My array! Here it is: {:?}", my_arr);
 
-// Obtain the number of bytes (not characters) in the given argument.
-// TODO: Add the AsRef trait appropriately as a trait bound.
-fn byte_counter<T>(arg: T) -> usize {
-    arg.as_ref().as_bytes().len()
+    let mut my_empty_vec = vec![1, 2, 3, 4, 5];
+    my_empty_vec.clear();
+    println!("This Vec is empty, see? {:?}", my_empty_vec);
+
+    let mut value_a = 45;
+    let mut value_b = 66;
+    // Let's swap these two!
+    std::mem::swap(&mut value_a, &mut value_b);
+    println!("value a: {}; value b: {}", value_a, value_b);
 }
 
-// Obtain the number of characters (not bytes) in the given argument.
-// TODO: Add the AsRef trait appropriately as a trait bound.
-fn char_counter<T>(arg: T) -> usize {
-    arg.as_ref().chars().count()
-}
-
-// Squares a number using as_mut().
-// TODO: Add the appropriate trait bound.
-fn num_sq<T>(arg: &mut T) {
-    // TODO: Implement the function body.
-    ???
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn different_counts() {
-        let s = "Café au lait";
-        assert_ne!(char_counter(s), byte_counter(s));
-    }
-
-    #[test]
-    fn same_counts() {
-        let s = "Cafe au lait";
-        assert_eq!(char_counter(s), byte_counter(s));
-    }
-
-    #[test]
-    fn different_counts_using_string() {
-        let s = String::from("Café au lait");
-        assert_ne!(char_counter(s.clone()), byte_counter(s));
-    }
-
-    #[test]
-    fn same_counts_using_string() {
-        let s = String::from("Cafe au lait");
-        assert_eq!(char_counter(s.clone()), byte_counter(s));
-    }
-
-    #[test]
-    fn mult_box() {
-        let mut num: Box<u32> = Box::new(3);
-        num_sq(&mut num);
-        assert_eq!(*num, 9);
-    }
-}

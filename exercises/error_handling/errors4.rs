@@ -1,32 +1,51 @@
-// errors4.rs
-//
-// Execute `rustlings hint errors4` or use the `hint` watch subcommand for a
-// hint.
-
-// I AM NOT DONE
+#![allow(clippy::comparison_chain)]
 
 #[derive(PartialEq, Debug)]
-struct PositiveNonzeroInteger(u64);
 
-#[derive(PartialEq, Debug)]
 enum CreationError {
     Negative,
     Zero,
 }
 
+#[derive(PartialEq, Debug)]
+struct PositiveNonzeroInteger(u64);
+
 impl PositiveNonzeroInteger {
-    fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
-        // Hmm...? Why is this only returning an Ok value?
-        Ok(PositiveNonzeroInteger(value as u64))
+    fn new(value: i64) -> Result<Self, CreationError> {
+        // TODO: This function shouldn't always return an `Ok`.
+        // Ok(Self(value as u64))
+        // Self(value as u64);
+        if value < 0 {
+            Err(CreationError::Negative)
+        } else if value == 0 {
+            Err(CreationError::Zero)
+        } else {
+            Ok(Self(value as u64))
+        }
     }
 }
 
-#[test]
-fn test_creation() {
-    assert!(PositiveNonzeroInteger::new(10).is_ok());
-    assert_eq!(
-        Err(CreationError::Negative),
-        PositiveNonzeroInteger::new(-10)
-    );
-    assert_eq!(Err(CreationError::Zero), PositiveNonzeroInteger::new(0));
+fn main() {
+    // You can optionally experiment here.
+    let pretend_user_input = "42";
+    let x: i64 = pretend_user_input.parse().unwrap();
+    println!("output={:?}", PositiveNonzeroInteger::new(x).unwrap());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_creation() {
+        assert_eq!(
+            PositiveNonzeroInteger::new(10),
+            Ok(PositiveNonzeroInteger(10)),
+        );
+        assert_eq!(
+            PositiveNonzeroInteger::new(-10),
+            Err(CreationError::Negative),
+        );
+        assert_eq!(PositiveNonzeroInteger::new(0), Err(CreationError::Zero));
+    }
 }

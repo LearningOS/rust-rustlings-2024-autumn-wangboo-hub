@@ -1,38 +1,37 @@
-// iterators2.rs
-//
 // In this exercise, you'll learn some of the unique advantages that iterators
-// can offer. Follow the steps to complete the exercise.
-//
-// Execute `rustlings hint iterators2` or use the `hint` watch subcommand for a
-// hint.
+// can offer.
 
-// I AM NOT DONE
+// use std::result;
 
-// Step 1.
-// Complete the `capitalize_first` function.
+// TODO: Complete the `capitalize_first` function.
 // "hello" -> "Hello"
-pub fn capitalize_first(input: &str) -> String {
-    let mut c = input.chars();
-    match c.next() {
+fn capitalize_first(input: &str) -> String {
+    let mut chars = input.chars();
+    match chars.next() {
         None => String::new(),
-        Some(first) => ???,
+        Some(first) => first.to_uppercase().collect::<String>() + chars.as_str(),
     }
 }
 
-// Step 2.
-// Apply the `capitalize_first` function to a slice of string slices.
+// TODO: Apply the `capitalize_first` function to a slice of string slices.
 // Return a vector of strings.
 // ["hello", "world"] -> ["Hello", "World"]
-pub fn capitalize_words_vector(words: &[&str]) -> Vec<String> {
-    vec![]
+fn capitalize_words_vector(words: &[&str]) -> Vec<String> {
+    words.iter().map(|word|{capitalize_first(word)}).collect()
 }
 
-// Step 3.
-// Apply the `capitalize_first` function again to a slice of string slices.
-// Return a single string.
+// TODO: Apply the `capitalize_first` function again to a slice of string
+// slices. Return a single string.
 // ["hello", " ", "world"] -> "Hello World"
-pub fn capitalize_words_string(words: &[&str]) -> String {
-    String::new()
+fn capitalize_words_string(words: &[&str]) -> String {
+    words.iter().map(|word|{capitalize_first(word)}).collect()
+}
+
+fn main() {
+    // You can optionally experiment here.
+    assert_eq!(capitalize_first("hello"), "Hello");
+    assert_eq!(capitalize_words_vector(&["hello", "world"]), ["Hello", "World"]);
+    assert_eq!(capitalize_words_string(&["hello", " ", "world"]), "Hello World");
 }
 
 #[cfg(test)]
