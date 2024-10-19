@@ -7,6 +7,7 @@ fn main() {
     // called `TEST_FOO`. Print in the standard output to let
     // Cargo do it.
     use std::time::{SystemTime, UNIX_EPOCH};
+    use std::env;
     let timestamp = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .unwrap()
